@@ -10,12 +10,16 @@ import javax.persistence.Persistence;
 import javax.persistence.Query;
 import javax.persistence.TypedQuery;
 
+import org.junit.After;
+import org.junit.Before;
 import org.junit.Test;
 
 public class ActeurRepositoryTest {
 
+
 	private EntityManagerFactory emf = Persistence.createEntityManagerFactory("movie_db");
 	private EntityManager em = emf.createEntityManager();
+
 
 	/**
 	 * Extraire tous les acteurs triés dans l'ordre alphabétique des identités
@@ -121,5 +125,17 @@ public class ActeurRepositoryTest {
 		List<Acteur> acteurs = query.getResultList();
 
 		assertEquals(27, acteurs.size());
+	}
+	
+	@Before
+	public void ouvertureRessources() {
+		emf = Persistence.createEntityManagerFactory("movie_db");
+		em = emf.createEntityManager();
+	}
+	
+	@After
+	public void fermetureRessources() {
+		em.close();
+		emf.close();
 	}
 }
